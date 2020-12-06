@@ -6,6 +6,8 @@ This project is under heavy development.
 
 ## Preparation
 
+### General
+
 * Make sure you have the appropriate Docker image specified for your hardware, in the Dockerfile.
 * Make sure the mountings are specified in your Docker-Compose file.
 * As of it is a working state, you have to put a Wordlist in the wordlist folder.
