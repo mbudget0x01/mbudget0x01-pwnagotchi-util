@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+
+  mbudget0x01-pwnagotchi-util:
+    build: .
+    restart: "no"
+    volumes:
+      - /media/sdb1/mbudget0x01-pwnagotchi-util:/root/mbudget0x01/handshakeparser/data
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
