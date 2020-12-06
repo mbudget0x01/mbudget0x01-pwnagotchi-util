@@ -1,4 +1,6 @@
 /build.bat
 /input
-wordlists/
-rules/
+wordlists/*
+!wordlists/placeholder
+rules/*
+!rules/placeholder
