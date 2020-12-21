@@ -35,7 +35,7 @@ class ProgressTracker:
             else:
                 self.AddSuccesfullFile(name, modificationDate, password)
 
-    def saveProgress(self, path):
+    def saveProgress(self):
         with open(Helpers.getProgressFilePath(), "w") as write_file:
             f = json.dumps([o.dump() for o in PROCESSED_FILES])
             write_file.write(f)
@@ -56,6 +56,7 @@ class ProgressTracker:
         if f is not None:
             PROCESSED_FILES.remove(f)
         PROCESSED_FILES.append(file)
+        self.saveProgress()
 
     def FileExists(self, file):
         if PROCESSED_FILES == []:
