@@ -8,6 +8,8 @@ FOLDER_DATA = "data"
 FOLDER_WORDLISTS = "wordlists"
 FOLDER_RULES = "rules"
 
+FILE_PROGRESS = "progress.json"
+
 ## FOLDER STRUCTURE ##
 #  ├─rules
 #  ├─wordlists

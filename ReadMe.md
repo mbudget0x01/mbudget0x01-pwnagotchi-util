@@ -4,6 +4,10 @@ This is a Docker Container with a script to crack pcap files with Hashcat. The a
 It uses the Docker container dizcza/docker-hashcat. \
 This project is under heavy development.
 
+## Hardware Requirements
+
+ * 1GB Harddisk
+
 ## Preparation
 
 ### General

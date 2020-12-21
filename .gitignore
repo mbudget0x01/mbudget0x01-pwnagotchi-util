@@ -5,3 +5,6 @@ wordlists/*
 rules/*
 !rules/placeholder
 .vscode/*
+/data
+__pycache__
+test.py

@@ -63,6 +63,10 @@ def getRulesPath():
     path = getRootPath()
     return os.path.join(path, StaticValues.FOLDER_RULES)
 
+def getProgressFilePath():
+    path = getDataPath()
+    return os.path.join(path, StaticValues.FILE_PROGRESS)
+
 #parsing helpers
 def fileIsHashCatUsable(file):
     size = os.path.getsize(file)
