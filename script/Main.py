@@ -3,8 +3,13 @@ import ConvertFile
 import StaticValues
 import Helpers
 import HashcatWrapper
+import logging
 
 def main():
+    ## initialize ##
+    logging.basicConfig(filename='/var/log/mbudget0x01-pwnagotchi-util.log', encoding='utf-8', level=logging.DEBUG)
+    Helpers.log_info("Main routine started")
+
     ## Actual Workload ##
     files = []
 
@@ -22,7 +27,9 @@ def main():
 
 
     ### Cracking the Files ###
+    Helpers.log_info("Starting PKMID attack")
     HashcatWrapper.PMKIDbruteForce()
+    Helpers.log_info("Starting WPA2 attack")
     HashcatWrapper.WPA2dictionaryAttack()
     
 
