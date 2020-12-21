@@ -30,7 +30,8 @@ def WPA2dictionaryAttack():
         builder.setOutputFile(outfile)
         builder.setOutputFileFormat("3")
         builder.setWordlist(wordlist)
-        builder.setRuleFile(rule)
+        #TODO implement cascadic at given time
+        #builder.setRuleFile(rule)
 
         command = builder.build()
         Helpers.log_info(command)
