@@ -7,7 +7,7 @@ import logging
 
 def main():
     ## initialize ##
-    logging.basicConfig(filename='/var/log/mbudget0x01-pwnagotchi-util.log', encoding='utf-8', level=logging.DEBUG)
+    logging.basicConfig(filename="/var/log/mbudget0x01-pwnagotchi-util.log", level=logging.DEBUG)
     Helpers.log_info("Main routine started")
 
     ## Actual Workload ##
