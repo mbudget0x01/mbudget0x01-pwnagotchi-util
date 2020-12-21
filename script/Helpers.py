@@ -3,6 +3,8 @@ import os
 import StaticValues
 import subprocess
 import shlex
+import ProgressTracker
+from datetime import datetime
 
 #Logging
 def log_info(message):   
@@ -92,3 +94,12 @@ def executeShellCommandWithCallback(command):
             print(output.strip())
     rc = process.poll()
     return rc
+
+#progress tracking Helpers
+def trackProgressByExitcode(name, exitCode, password = "Na"):
+    lastEdit = int(datetime.now().timestamp())
+    pt = ProgressTracker.ProgressTracker()
+    if exitCode == 0:
+        pt.AddSuccesfullFile(name,lastEdit,password)
+    else:
+        pt.AddFailedFile(name, lastEdit)

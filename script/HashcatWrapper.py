@@ -33,10 +33,11 @@ def WPA2dictionaryAttack():
         builder.setRuleFile(rule)
 
         command = builder.build()
-        print(command)
+        Helpers.log_info(command)
  
         #pipe = executeShellCommand(command)
         pipe = Helpers.executeShellCommandWithCallback(command)
+        Helpers.trackProgressByExitcode(outfile.replace(".txt",".pcap"),pipe)
         Helpers.log_info("Hashcat ended with status: " + str(pipe))
 
 def PMKIDbruteForce():
@@ -68,8 +69,9 @@ def PMKIDbruteForce():
         builder.setBruteForceMask("?d?d?d?d?d?d?d?d")
 
         command = builder.build()
-        print(command)
+        Helpers.log_info(command)
  
         #pipe = executeShellCommand(command)
         pipe = Helpers.executeShellCommandWithCallback(command)
+        Helpers.trackProgressByExitcode(outfile.replace(".txt",".pcap"),pipe)
         Helpers.log_info("Hashcat ended with status: " + str(pipe))
