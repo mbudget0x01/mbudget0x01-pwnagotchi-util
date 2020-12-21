@@ -4,3 +4,4 @@ wordlists/*
 !wordlists/placeholder
 rules/*
 !rules/placeholder
+.vscode/*

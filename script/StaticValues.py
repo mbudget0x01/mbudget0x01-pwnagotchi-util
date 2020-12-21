@@ -20,10 +20,11 @@ FOLDER_RULES = "rules"
 ######################
 
 #OS & Util related Stuff
+UTIL_PATH_HCXPCAPTOOL = "/root/hcxtools/hcxpcaptool"
 UTIL_PATH_CAP2HCCAPX = "/root/hashcat-utils/src/cap2hccapx.bin"
 UTIL_PATH_HASHCAT="/root/hashcat/hashcat"
 
-UTIL_FILE_NAME_CAP2HCCAPX_INTERMED="intermed"
+UTIL_FILE_NAME_INTERMED="intermed"
 
 #Session Related Stuff
 SESSION_UUID = str(uuid.uuid4())

@@ -3,11 +3,13 @@ import StaticValues
 import os
 import HashcatCommandBuilder
 
-def dictionaryAttack():
+def WPA2dictionaryAttack():
     files = []
     intermediatePath = Helpers.getSessionIntermedPath()  
     for file in os.listdir(intermediatePath):
-        files.append(file)
+        #Move To STATIC Values
+        if file.endswith(".hccapx"):
+            files.append(file)
 
     outpath = Helpers.getSessionOutputPath()
     #prepare wordlist
@@ -18,7 +20,7 @@ def dictionaryAttack():
     for file in files:
         #preparing files
         infile = os.path.join(intermediatePath, file)
-        outfile = file.replace(StaticValues.UTIL_FILE_NAME_CAP2HCCAPX_INTERMED+"_", '')
+        outfile = file.replace(StaticValues.UTIL_FILE_NAME_INTERMED+"_", '')
         outfile = outfile.replace(".hccapx",".txt")
         outfile = os.path.join(outpath,outfile)
         
@@ -29,6 +31,41 @@ def dictionaryAttack():
         builder.setOutputFileFormat("3")
         builder.setWordlist(wordlist)
         builder.setRuleFile(rule)
+
+        command = builder.build()
+        print(command)
+ 
+        #pipe = executeShellCommand(command)
+        pipe = Helpers.executeShellCommandWithCallback(command)
+        Helpers.log_info("Hashcat ended with status: " + str(pipe))
+
+def PMKIDbruteForce():
+    files = []
+    intermediatePath = Helpers.getSessionIntermedPath()  
+    for file in os.listdir(intermediatePath):
+        #Move To STATIC Values
+        if file.endswith(".pmkid"):
+            files.append(file)
+
+    outpath = Helpers.getSessionOutputPath()
+
+    #build & execute hashcat command
+    for file in files:
+        #preparing files
+        infile = os.path.join(intermediatePath, file)
+        outfile = file.replace(StaticValues.UTIL_FILE_NAME_INTERMED+"_", '')
+        outfile = outfile.replace(".pmkid",".txt")
+        outfile = os.path.join(outpath,outfile)
+        
+        #building hashcat_command
+        builder = HashcatCommandBuilder.HashcatCommandBuilder()
+        builder.setInputFile(infile)
+        builder.setOutputFile(outfile)
+        builder.setOutputFileFormat("3")
+        builder.setAttackMode("3")
+        builder.setWorkloadProfile("3")
+        builder.setHashType("16800")
+        builder.setBruteForceMask("?d?d?d?d?d?d?d?d")
 
         command = builder.build()
         print(command)

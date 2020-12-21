@@ -1,5 +1,5 @@
 import os
-from ConvertFile import convertPcapToHccapx
+import ConvertFile
 import StaticValues
 import Helpers
 import HashcatWrapper
@@ -15,12 +15,16 @@ def main():
     Helpers.createSessionPaths()
     inputpath = Helpers.getInputPath()
 
-    convertPcapToHccapx(inputpath)
+    ConvertFile.convertPcapToHccapx(inputpath)
     Helpers.log_info("Files to hccapx converted")
+    ConvertFile.convertPcapToPMKID(inputpath)
+    Helpers.log_info("Files to pmkid converted")
 
 
     ### Cracking the Files ###
-    HashcatWrapper.dictionaryAttack()
+    HashcatWrapper.PMKIDbruteForce()
+    HashcatWrapper.WPA2dictionaryAttack()
+    
 
     #cleanup
     intermediatePath = Helpers.getSessionIntermedPath()

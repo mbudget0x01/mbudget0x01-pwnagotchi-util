@@ -15,6 +15,8 @@ def log_error(message):
     log(logging.ERROR, message)
 
 def log(level, message):
+    #TODO: make correct
+    print( "["+ StaticValues.TAG +"] " + message)
     logging.log(level, "["+ StaticValues.TAG +"] " + message)
 
 #Helper Functions

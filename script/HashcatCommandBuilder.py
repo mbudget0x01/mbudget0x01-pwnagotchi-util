@@ -11,6 +11,12 @@ class HashcatCommandBuilder():
         self.outputFile = ""
         self.outputFileFormat = ""
         self.wordlist = ""
+        self.attackMode = ""
+        self.workloadProfile = ""
+        self.bruteForceMask = ""
+    
+    def setAttackMode(self, mode):
+        self.attackMode = mode
 
     def setHashType(self, type):
         self.hashType = type
@@ -30,6 +36,12 @@ class HashcatCommandBuilder():
     def setWordlist(self, file):
         self.wordlist = file
     
+    def setWorkloadProfile(self, profile):
+        self.workloadProfile = profile
+
+    def setBruteForceMask(self,mask):
+        self.bruteForceMask = mask
+
     def build(self):
         #get Hashcat Binary
         command = StaticValues.UTIL_PATH_HASHCAT
@@ -40,6 +52,14 @@ class HashcatCommandBuilder():
         else:
              command = command + " -m " + self.hashType
 
+        #check attack mode
+        if not str(self.attackMode) == "":
+            command = command +" -a"+self.attackMode
+
+        #check workload Profile
+        if not str(self.workloadProfile) == "":
+            command = command +" -w"+self.workloadProfile
+
         #check rule
         if not str(self.ruleFile) == "":
             command = command + " -r " + self.ruleFile
@@ -49,11 +69,12 @@ class HashcatCommandBuilder():
             command = command + " " + self.inputFile
         
         #wordlist
-        if str(self.wordlist) == "":
-            wl = os.path.join(Helpers.getWordlistPath(), StaticValues.STANDARD_WORDLIST)
-            command = command + " " + wl
-        else:
+        if not str(self.wordlist) == "":
             command = command + " " + self.wordlist
+
+        #check Brute Force Mask
+        if not str(self.bruteForceMask) == "":
+            command = command + " '" + self.bruteForceMask + "'"
 
         #check outfile
         if not str(self.outputFile) == "":
