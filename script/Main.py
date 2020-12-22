@@ -4,11 +4,16 @@ import StaticValues
 import Helpers
 import HashcatWrapper
 import logging
+import docker.DockerHandling as DockerHandling
 
 def main():
     ## initialize ##
     logging.basicConfig(filename="/var/log/mbudget0x01-pwnagotchi-util.log", level=logging.DEBUG)
     Helpers.log_info("Main routine started")
+
+    ### Load config ###
+    Helpers.log_info("Loading config")
+    DockerHandling.initializeEnvVariables()
 
     ## Actual Workload ##
     files = []

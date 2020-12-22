@@ -1,4 +1,4 @@
-/build.bat
+/*.bat
 /input
 wordlists/*
 !wordlists/placeholder
@@ -7,4 +7,3 @@ rules/*
 .vscode/*
 /data
 __pycache__
-test.py

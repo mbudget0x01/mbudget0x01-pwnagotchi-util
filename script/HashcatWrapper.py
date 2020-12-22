@@ -3,7 +3,7 @@ import StaticValues
 import os
 import HashcatCommandBuilder
 
-def WPA2dictionaryAttack():
+def WPA2dictionaryAttack(userulefile=False):
     files = []
     intermediatePath = Helpers.getSessionIntermedPath()  
     for file in os.listdir(intermediatePath):
@@ -14,7 +14,8 @@ def WPA2dictionaryAttack():
     outpath = Helpers.getSessionOutputPath()
     #prepare wordlist
     wordlist = os.path.join(Helpers.getWordlistPath(), StaticValues.STANDARD_WORDLIST)
-    rule = os.path.join(Helpers.getRulesPath(), StaticValues.STANDARD_RULE)
+    if userulefile:
+        rule = os.path.join(Helpers.getRulesPath(), StaticValues.STANDARD_RULE)
 
     #build & execute hashcat command
     for file in files:
@@ -31,7 +32,8 @@ def WPA2dictionaryAttack():
         builder.setOutputFileFormat("3")
         builder.setWordlist(wordlist)
         #TODO implement cascadic at given time
-        #builder.setRuleFile(rule)
+        if userulefile:
+            builder.setRuleFile(rule)
 
         command = builder.build()
         Helpers.log_info(command)

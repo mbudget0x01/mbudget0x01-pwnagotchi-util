@@ -103,3 +103,5 @@ def trackProgressByExitcode(name, exitCode, password = "Na"):
         pt.AddSuccesfullFile(name,lastEdit,password)
     else:
         pt.AddFailedFile(name, lastEdit)
+    pt.saveProgress()
+    log_info("Progress saved at" + str(datetime.now().timestamp()))
