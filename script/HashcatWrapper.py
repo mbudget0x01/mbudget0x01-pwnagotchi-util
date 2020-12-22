@@ -3,6 +3,8 @@ import StaticValues
 import os
 import HashcatCommandBuilder
 
+#TODO:Split up in bruteforce and dictionary Attack then split in pmkid and wpa
+
 def WPA2dictionaryAttack(userulefile=False):
     files = []
     intermediatePath = Helpers.getSessionIntermedPath()  

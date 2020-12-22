@@ -4,19 +4,14 @@ This is a Docker Container with a script to crack pcap files with Hashcat. The a
 It uses the Docker container dizcza/docker-hashcat. \
 This project is under heavy development.
 
-## Hardware Requirements
-
- * 1GB Harddisk
-
 ## Preparation
 
 ### General
 
-* Make sure you have the appropriate Docker image specified for your hardware, in the Dockerfile.
-* Make sure the mountings are specified in your Docker-Compose file.
-* As of it is a working state, you have to put a Wordlist in the wordlist folder.
-* Optionally you have to do the same for rules.
-* Then adjust the files in script/StaticValues.py
+* Make sure you have the appropriate Docker image specified for your hardware, in the [Docker File](DockerFile "DockerFile").
+* Make sure the mountings are specified in your [Docker-Compose file](docker-compose.yml "Docker-Compose file").
+* Optional:
+  * Put custom wordlists and rule files in the according folders
 
 ### Hashcat
 
@@ -24,9 +19,24 @@ Configuration has To be implemented.
 
 ## Usage
 
-Start the Container and it will do its work.
+If you don't want to use ```docker-compose```, make sure you pass your variables and have set the mappings.
 
-### FOLDER STRUCTURE
+### Repetitive Usage
+
+1. Configure the user.env file according to your wishes
+2. Start the Container and it will do its work, I highly reccomend to use docker compose.
+    * Navigate to the ```docker-compose.yml``` file
+    * ```docker-compose up -d```
+
+### After adding or removing wordlists/rule files
+
+1. Configure the user.env file according to your wishes
+2. Start the Container and it will do its work, I highly reccomend to use docker compose.
+    * Navigate to the ```docker-compose.yml``` file
+    * ```docker-compose build```
+    * ```docker-compose up -d```
+
+## FOLDER STRUCTURE
 
 \
   ├─rules \
@@ -48,4 +58,4 @@ Start the Container and it will do its work.
 ## Licensing
 
 For the Containers refer to the manufacterers of the containers.
-This underlies the GPL3 License.
+This project underlies the GPL3 License.
