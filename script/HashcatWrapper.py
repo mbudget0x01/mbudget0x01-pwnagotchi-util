@@ -1,82 +1,45 @@
+import util.hashcat.HashcatUtil as hashcat
+import util.shell.ShellInteractions as shell
 import Helpers
-import StaticValues
-import os
-import HashcatCommandBuilder
 
-#TODO:Split up in bruteforce and dictionary Attack then split in pmkid and wpa
+def execute(command):
+    Helpers.log_info(command)
+    return shell.executeShellCommandWithCallback(command)
 
-def WPA2dictionaryAttack(userulefile=False):
-    files = []
-    intermediatePath = Helpers.getSessionIntermedPath()  
-    for file in os.listdir(intermediatePath):
-        #Move To STATIC Values
-        if file.endswith(".hccapx"):
-            files.append(file)
+def log_progress(exit_code, file):
+    Helpers.trackProgressByExitcode(file, exit_code)
+    Helpers.log_info("Hashcat ended with status: " + str(exit_code))
 
-    outpath = Helpers.getSessionOutputPath()
-    #prepare wordlist
-    wordlist = os.path.join(Helpers.getWordlistPath(), StaticValues.STANDARD_WORDLIST)
-    if userulefile:
-        rule = os.path.join(Helpers.getRulesPath(), StaticValues.STANDARD_RULE)
+#WPA Attacks
+def attack_wpa_bruteforce(infile,mask, outfile = None):
+    builder = hashcat.bruteforce_Attack(infile, mask, outfile)
+    builder = hashcat.set_wpa_Hash(builder)
+    command = hashcat.build(builder)
+    exit_code = execute(command)
+    #TODO: static value
+    log_progress(exit_code, infile.replace(".hccapx",".pcap"))
 
-    #build & execute hashcat command
-    for file in files:
-        #preparing files
-        infile = os.path.join(intermediatePath, file)
-        outfile = file.replace(StaticValues.UTIL_FILE_NAME_INTERMED+"_", '')
-        outfile = outfile.replace(".hccapx",".txt")
-        outfile = os.path.join(outpath,outfile)
-        
-        #building hashcat_command
-        builder = HashcatCommandBuilder.HashcatCommandBuilder()
-        builder.setInputFile(infile)
-        builder.setOutputFile(outfile)
-        builder.setOutputFileFormat("3")
-        builder.setWordlist(wordlist)
-        #TODO implement cascadic at given time
-        if userulefile:
-            builder.setRuleFile(rule)
+def attack_wpa_wordlist(infile,wordlist,rulefile=None,outfile=None):
+    builder = hashcat.dictionary_Attack(infile,wordlist,rulefile,outfile)
+    builder = hashcat.set_wpa_Hash(builder)
+    command = hashcat.build(builder)
+    exit_code = execute(command)
+    #TODO: static value
+    log_progress(exit_code, infile.replace(".hccapx",".pcap"))
 
-        command = builder.build()
-        Helpers.log_info(command)
- 
-        #pipe = executeShellCommand(command)
-        pipe = Helpers.executeShellCommandWithCallback(command)
-        Helpers.trackProgressByExitcode(outfile.replace(".txt",".pcap"),pipe)
-        Helpers.log_info("Hashcat ended with status: " + str(pipe))
+#PMKID Attack
+def attack_pmkid_bruteforce(infile,mask, outfile = None):
+    builder = hashcat.bruteforce_Attack(infile, mask, outfile)
+    builder = hashcat.set_pmkid_Hash(builder)
+    command = hashcat.build(builder)
+    exit_code = execute(command)
+    #TODO: static value
+    log_progress(exit_code, infile.replace(".pmkid",".pcap"))
 
-def PMKIDbruteForce():
-    files = []
-    intermediatePath = Helpers.getSessionIntermedPath()  
-    for file in os.listdir(intermediatePath):
-        #Move To STATIC Values
-        if file.endswith(".pmkid"):
-            files.append(file)
-
-    outpath = Helpers.getSessionOutputPath()
-
-    #build & execute hashcat command
-    for file in files:
-        #preparing files
-        infile = os.path.join(intermediatePath, file)
-        outfile = file.replace(StaticValues.UTIL_FILE_NAME_INTERMED+"_", '')
-        outfile = outfile.replace(".pmkid",".txt")
-        outfile = os.path.join(outpath,outfile)
-        
-        #building hashcat_command
-        builder = HashcatCommandBuilder.HashcatCommandBuilder()
-        builder.setInputFile(infile)
-        builder.setOutputFile(outfile)
-        builder.setOutputFileFormat("3")
-        builder.setAttackMode("3")
-        builder.setWorkloadProfile("3")
-        builder.setHashType("16800")
-        builder.setBruteForceMask("?d?d?d?d?d?d?d?d")
-
-        command = builder.build()
-        Helpers.log_info(command)
- 
-        #pipe = executeShellCommand(command)
-        pipe = Helpers.executeShellCommandWithCallback(command)
-        Helpers.trackProgressByExitcode(outfile.replace(".txt",".pcap"),pipe)
-        Helpers.log_info("Hashcat ended with status: " + str(pipe))
+def attack_pmkid_wordlist(infile,wordlist,rulefile=None,outfile=None):
+    builder = hashcat.dictionary_Attack(infile,wordlist,rulefile,outfile)
+    builder = hashcat.set_pmkid_Hash(builder)
+    command = hashcat.build(builder)
+    exit_code = execute(command)
+    #TODO: static value
+    log_progress(exit_code, infile.replace(".pmkid",".pcap"))

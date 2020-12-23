@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # add data
 ADD script /root/mbudget0x01/handshakeparser/script
-ADD default.env /root/mbudget0x01/handshakeparser/script/docker/default.env
+ADD default.env /root/mbudget0x01/handshakeparser/script/session/docker/default.env
 
 ADD wordlists /root/mbudget0x01/handshakeparser/wordlists
 ADD rules /root/mbudget0x01/handshakeparser/rules

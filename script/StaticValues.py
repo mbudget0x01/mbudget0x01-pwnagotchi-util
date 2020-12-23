@@ -29,7 +29,7 @@ UTIL_PATH_HASHCAT="/root/hashcat/hashcat"
 UTIL_FILE_NAME_INTERMED="intermed"
 
 #Session Related Stuff
-SESSION_UUID = str(uuid.uuid4())
+#SESSION_UUID = str(uuid.uuid4())
 TAG = "Parse-Files"
 
 #Standard Values

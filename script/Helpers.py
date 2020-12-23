@@ -1,10 +1,11 @@
 import logging
 import os
-import StaticValues
-import subprocess
-import shlex
-import ProgressTracker
 from datetime import datetime
+
+import ProgressTracker
+import StaticValues
+import session
+
 
 #Logging
 def log_info(message):   
@@ -31,7 +32,7 @@ def getDataPath():
     return os.path.join(path, StaticValues.FOLDER_DATA)
 
 def getSessionFolderPath():
-    return os.path.join(getDataPath(),StaticValues.SESSION_UUID)
+    return os.path.join(getDataPath(),session.static_values.SESSION_UUID)
 
 def getInputPath():
     return os.path.join(getDataPath(),StaticValues.FOLDER_INPUT)
@@ -76,24 +77,6 @@ def fileIsHashCatUsable(file):
         return True
     else:
         return False
-
-#Shell interaction
-def executeShellCommand(command):
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    p_status = p.wait()
-    return p_status
-
-def executeShellCommandWithCallback(command):
-    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
-    while True:
-        output = process.stdout.readline()
-        #if output == '' and process.poll() is not None:
-        if process.poll() is not None:
-            break
-        if output:
-            print(output.strip())
-    rc = process.poll()
-    return rc
 
 #progress tracking Helpers
 def trackProgressByExitcode(name, exitCode, password = "Na"):

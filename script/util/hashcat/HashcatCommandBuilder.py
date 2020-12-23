@@ -1,6 +1,5 @@
-import StaticValues
+from .StaticValues import UTIL_PATH_HASHCAT, UTIL_MODIFIERS_HASHCAT_WPA_HASH, UTIL_MODIFIERS_HASHCAT_FILE_FORMAT
 import os
-import Helpers
 
 class HashcatCommandBuilder():
 
@@ -44,11 +43,11 @@ class HashcatCommandBuilder():
 
     def build(self):
         #get Hashcat Binary
-        command = StaticValues.UTIL_PATH_HASHCAT
+        command = UTIL_PATH_HASHCAT
         
         #check hash type
         if str(self.hashType) == "":
-            command = command + " " + StaticValues.UTIL_MODIFIERS_HASHCAT_MODE
+            command = command + " " + UTIL_MODIFIERS_HASHCAT_WPA_HASH
         else:
              command = command + " -m " + self.hashType
 
@@ -81,7 +80,7 @@ class HashcatCommandBuilder():
             command = command + " --outfile=" + self.outputFile
             command = command + " --outfile-format="
             if str(self.outputFileFormat) == "":
-                command = command + StaticValues.UTIL_MODIFIERS_HASHCAT_FILE_FORMAT
+                command = command + UTIL_MODIFIERS_HASHCAT_FILE_FORMAT
             else:
                 command = command + self.outputFileFormat
         
