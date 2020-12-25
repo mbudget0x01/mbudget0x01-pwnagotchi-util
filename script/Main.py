@@ -1,55 +1,44 @@
-import os
-import ConvertFile
-import StaticValues
-import Helpers
-import HashcatWrapper
-import logging
-import docker.DockerHandling as DockerHandling
+import packages.log
+import packages.log.log as log
+import packages.session as session
+
+import FileConverter
+import attack_coordinator
 
 def main():
-    ## initialize ##
-    logging.basicConfig(filename="/var/log/mbudget0x01-pwnagotchi-util.log", level=logging.DEBUG)
-    Helpers.log_info("Main routine started")
+    log.log_info("----------------------------")
+    log.log_info("Main routine started")
+    log.log_info("----------------------------")
 
-    ### Load config ###
-    Helpers.log_info("Loading config")
-    DockerHandling.initializeEnvVariables()
+    #load attacks
+    attack_coordinator.prepare()
 
-    ## Actual Workload ##
-    files = []
+    input_path = session.file_system.getInputPath()
+    log.log_debug("Input Path: " + input_path)
+    intermed_path = session.file_system.getSessionIntermedPath()
 
-    ### Transforming the files ###
-    Helpers.log_info("Started Session with UUID: " + StaticValues.SESSION_UUID)
-
-    #Preparing Paths
-    Helpers.createSessionPaths()
-    inputpath = Helpers.getInputPath()
-
-    ConvertFile.convertPcapToHccapx(inputpath)
-    Helpers.log_info("Files to hccapx converted")
-    ConvertFile.convertPcapToPMKID(inputpath)
-    Helpers.log_info("Files to pmkid converted")
+    #converting the files
+    if attack_coordinator.attack_pmkid_bruteforce or attack_coordinator.attack_pmkid_dictionary:
+        log.log_info("Converting pcap files to pmkid...")
+        FileConverter.convert_multiple_pcap_to_pmkid(input_path, intermed_path)
 
 
-    ### Cracking the Files ###
-    Helpers.log_info("Starting PKMID attack")
-    HashcatWrapper.PMKIDbruteForce()
-    Helpers.log_info("Starting WPA2 attack")
-    HashcatWrapper.WPA2dictionaryAttack()
+    if attack_coordinator.attack_wpa_bruteforce or attack_coordinator.attack_wpa_dictionary:
+        log.log_info("Converting pcap files to hccapx...")
+        FileConverter.convert_multiple_pcap_to_hccapx(input_path, intermed_path)
+
+    #check if hascat should write output or if it is a dry run
+        output_path = None
+    if session.docker.util.get_boolean_variable("hashcat_print_outfiles"):
+        output_path = session.file_system.getSessionOutputPath()
     
+    #passing the attacks to the attack_coordinator
+    attack_coordinator.attack(intermed_path, output_path)
 
-    #cleanup
-    intermediatePath = Helpers.getSessionIntermedPath()
-    Helpers.log_info("Starting cleanup")
-    files.clear()
-    for file in os.listdir(intermediatePath):
-        files.append(file)
-
-    for file in files:
-        path = os.path.join(intermediatePath, file)
-        os.remove(path)
+    #cleaning up
 
 
+    log.log_info("Main routine finished execution")
 
 if __name__ == "__main__":
     main()

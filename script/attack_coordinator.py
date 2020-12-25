@@ -12,7 +12,13 @@ attack_wpa_dictionary = False
 attack_pmkid_bruteforce = False
 attack_pmkid_dictionary = False
 
+prepared = False
+
 def parse_attacks_enabled():
+    global attack_wpa_bruteforce
+    global attack_wpa_dictionary
+    global attack_pmkid_bruteforce
+    global attack_pmkid_dictionary
     attack_wpa_bruteforce = session.docker.util.get_boolean_variable("attack_wpa_bruteforce")
     attack_wpa_dictionary = session.docker.util.get_boolean_variable("attack_wpa_dictionary")
     attack_pmkid_bruteforce = session.docker.util.get_boolean_variable("attack_pmkid_bruteforce")
@@ -82,8 +88,13 @@ def launch_wpa_dictionary_attack(input_folder,output_folder=None):
             hashcat.attack_wpa_wordlist(infile,wordlist,rulefile,outfile)
 
 def attack(input_folder,output_folder=None):
-    parse_attacks_enabled()
-    log_out_attacks_enabled()
+
+    global prepared
+    
+    if prepared == False:
+        prepare()
+
+    log.log_info("Starting attack run")
     
     if attack_pmkid_dictionary:
         launch_pmkid_dictionary_attack(input_folder,output_folder)
@@ -98,4 +109,8 @@ def attack(input_folder,output_folder=None):
         launch_wpa_bruteforce_attack(input_folder,output_folder)
     
     log.log_info("Attack run ended")
-    
+
+def prepare():
+    parse_attacks_enabled()
+    log_out_attacks_enabled()
+    prepared = True
