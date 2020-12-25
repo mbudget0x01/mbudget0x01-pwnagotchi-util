@@ -51,9 +51,10 @@ If you don't want to use ```docker-compose```, make sure you pass your variables
 ## Todo
 
 - [ ] implement notification at end of run
-- [ ] Add in multiple modes for the hascat execution e.g. rules etc
-- [ ] Make runs configurable
+- [x] Add in multiple modes for the hascat execution e.g. rules etc
+- [x] Make runs configurable
 - [ ] Keep a list of all attempts and results, to prevent multiple workload
+- [ ] Write and extend a Wordlist out of SSIDs to use in further runs
 
 ## Licensing
 
