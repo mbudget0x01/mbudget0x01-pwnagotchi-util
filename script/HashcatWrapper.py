@@ -4,7 +4,7 @@ import packages.log.log as log
 import packages.progress.progress as progress
 
 def execute(command):
-    log.log_info(command)
+    log.log_debug(command)
     return shell.executeShellCommandWithCallback(command)
 
 def track_progress(exit_code, file):
