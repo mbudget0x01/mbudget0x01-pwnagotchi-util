@@ -1,5 +1,6 @@
 /*.bat
-/input
+/input/*
+/input/placeholder
 wordlists/*
 !wordlists/placeholder
 rules/*
