@@ -22,8 +22,8 @@ FILE_PROGRESS = "progress.json"
 ######################
 
 #OS & Util related Stuff
-UTIL_PATH_HCXPCAPTOOL = "/root/hcxtools/hcxpcaptool"
-UTIL_PATH_CAP2HCCAPX = "/root/hashcat-utils/src/cap2hccapx.bin"
+# UTIL_PATH_HCXPCAPTOOL = "/root/hcxtools/hcxpcaptool"
+# UTIL_PATH_CAP2HCCAPX = "/root/hashcat-utils/src/cap2hccapx.bin"
 UTIL_PATH_HASHCAT="/root/hashcat/hashcat"
 
 UTIL_FILE_NAME_INTERMED="intermed"
