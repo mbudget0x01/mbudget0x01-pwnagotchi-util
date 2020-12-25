@@ -26,7 +26,6 @@ If you don't want to use ```docker-compose```, make sure you pass your variables
 The Script comes with two ```.env``` files. \
 The ```default.env``` is used as base ```.env``` konfiguration file. Use it as reference but don't change it. In the ```user.env``` you can overwrite the values from the ```defualt.env``` file and configure your run. These variables are parsed during runtime. This means there is no container rebuild required for diffrent runs if you specify something there. The Key-Value pairs should be selfexplaintory ;-)
 
-
 ### Repetitive Usage
 
 1. Configure the user.env file according to your wishes
