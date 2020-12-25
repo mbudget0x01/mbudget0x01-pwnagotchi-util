@@ -9,7 +9,7 @@ def getRootPath():
     if root_path == "":
         file = os.path.dirname(os.path.realpath(__file__))
         #move value
-        while os.path.dirname(file) != "script":
+        while os.path.basename(file) != "script":
             if file == os.path.dirname(file):
                 raise Exception()
             file = os.path.dirname(file)

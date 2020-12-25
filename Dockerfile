@@ -18,5 +18,8 @@ ADD rules /root/mbudget0x01/handshakeparser/rules
 RUN mkdir /root/mbudget0x01/handshakeparser/data
 RUN mkdir /root/mbudget0x01/handshakeparser/data/input
 
+#DEBUG
+ADD input /root/mbudget0x01/handshakeparser/data/input
+
 #Startup
 ENTRYPOINT python3 /root/mbudget0x01/handshakeparser/script/Main.py

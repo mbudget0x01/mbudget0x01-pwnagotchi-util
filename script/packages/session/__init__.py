@@ -1,7 +1,7 @@
 from .static_values import *
-from .docker.DockerHandling import parseDockerEnvFile
+from .docker.DockerHandling import initializeEnvVariables
 from .file_system import createSessionPaths
 
 #create session
-parseDockerEnvFile()
+initializeEnvVariables()
 createSessionPaths()

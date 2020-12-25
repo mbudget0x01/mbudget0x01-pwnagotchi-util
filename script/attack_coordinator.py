@@ -1,5 +1,6 @@
 import packages.log.log as log
 import packages.session as session
+import packages.session.docker.util as docker_util
 import HashcatWrapper as hashcat
 import os
 import packages.util.pcap.static_values as pcap_vals
@@ -19,10 +20,10 @@ def parse_attacks_enabled():
     global attack_wpa_dictionary
     global attack_pmkid_bruteforce
     global attack_pmkid_dictionary
-    attack_wpa_bruteforce = session.docker.util.get_boolean_variable("attack_wpa_bruteforce")
-    attack_wpa_dictionary = session.docker.util.get_boolean_variable("attack_wpa_dictionary")
-    attack_pmkid_bruteforce = session.docker.util.get_boolean_variable("attack_pmkid_bruteforce")
-    attack_pmkid_dictionary = session.docker.util.get_boolean_variable("attack_pmkid_dictionary")
+    attack_wpa_bruteforce = docker_util.get_boolean_variable("attack_wpa_bruteforce")
+    attack_wpa_dictionary = docker_util.get_boolean_variable("attack_wpa_wordlist")
+    attack_pmkid_bruteforce = docker_util.get_boolean_variable("attack_pmkid_bruteforce")
+    attack_pmkid_dictionary = docker_util.get_boolean_variable("attack_pmkid_wordlist")
 
 def log_out_attacks_enabled():
     log.log_info("Attack modes parsed...")
@@ -39,7 +40,7 @@ def launch_pmkid_bruteforce_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_PKMID,".txt")
-            mask = session.docker.util.get_string_variable("attack_pmkid_bruteforce_mask")
+            mask = docker_util.get_string_variable("attack_pmkid_bruteforce_mask")
             log.log_info("Using bruteforce: " + str(mask))
             hashcat.attack_pmkid_bruteforce(infile,mask,outfile)
 
@@ -51,7 +52,7 @@ def launch_wpa_bruteforce_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_HCCAPX,".txt")
-            mask = session.docker.util.get_string_variable("attack_wpa_bruteforce_mask")
+            mask = docker_util.get_string_variable("attack_wpa_bruteforce_mask")
             log.log_info("Using bruteforce: " + str(mask))
             hashcat.attack_pmkid_bruteforce(infile,mask,outfile)
 
@@ -63,11 +64,11 @@ def launch_pmkid_dictionary_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_PKMID,".txt")
-            wordlist = session.docker.util.get_string_variable("attack_pmkid_wordlist_file_path")
+            wordlist = docker_util.get_string_variable("attack_pmkid_wordlist_file_path")
             log.log_info("Using wordlist: " + str(wordlist))
             rulefile = None
-            if session.docker.util.get_boolean_variable("attack_pmkid_wordlist_use_rule_file"):
-                rulefile = session.docker.util.get_string_variable("attack_pmkid_wordlist_rule_file_path")
+            if docker_util.get_boolean_variable("attack_pmkid_wordlist_use_rule_file"):
+                rulefile = docker_util.get_string_variable("attack_pmkid_wordlist_rule_file_path")
                 log.log_info("Using rule: " + str(rulefile))
             hashcat.attack_pmkid_wordlist(infile,wordlist,rulefile,outfile)
 
@@ -79,11 +80,11 @@ def launch_wpa_dictionary_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_HCCAPX,".txt")
-            wordlist = session.docker.util.get_string_variable("attack_wpa_wordlist_file_path")
+            wordlist = docker_util.get_string_variable("attack_wpa_wordlist_file_path")
             log.log_info("Using wordlist: " + str(wordlist))
             rulefile = None
-            if session.docker.util.get_boolean_variable("attack_wpa_wordlist_use_rule_file"):
-                rulefile = session.docker.util.get_string_variable("attack_wpa_wordlist_rule_file_path")
+            if docker_util.get_boolean_variable("attack_wpa_wordlist_use_rule_file"):
+                rulefile = docker_util.get_string_variable("attack_wpa_wordlist_rule_file_path")
                 log.log_info("Using rule: " + str(rulefile))
             hashcat.attack_wpa_wordlist(infile,wordlist,rulefile,outfile)
 
@@ -111,6 +112,7 @@ def attack(input_folder,output_folder=None):
     log.log_info("Attack run ended")
 
 def prepare():
+    global prepared
     parse_attacks_enabled()
     log_out_attacks_enabled()
     prepared = True

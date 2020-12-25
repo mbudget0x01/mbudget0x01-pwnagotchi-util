@@ -16,6 +16,7 @@ def main():
     input_path = session.file_system.getInputPath()
     log.log_debug("Input Path: " + input_path)
     intermed_path = session.file_system.getSessionIntermedPath()
+    log.log_debug("Intermediate Path: " + intermed_path)
 
     #converting the files
     if attack_coordinator.attack_pmkid_bruteforce or attack_coordinator.attack_pmkid_dictionary:

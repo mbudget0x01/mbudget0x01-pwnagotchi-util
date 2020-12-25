@@ -9,7 +9,7 @@ def getSehllVariable(varname):
         return None
 
 def parseDockerEnvFile():
-    #TODO: change
+    global envVars
     file = os.path.dirname(os.path.realpath(__file__))
     file = os.path.dirname(file)
     file = os.path.join(file, "docker", "default.env")
@@ -20,6 +20,7 @@ def parseDockerEnvFile():
                 envVars[name.strip()] = str(var).strip()
 
 def updateVariables():
+    global envVars
     for key in envVars.keys():
         val = getSehllVariable(key)
         if not val is None:
