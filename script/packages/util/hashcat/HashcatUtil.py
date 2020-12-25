@@ -35,8 +35,7 @@ def set_output_file(outfile,builder,outfileformat=None):
     builder.setOutputFile(outfile)
     
     if outfileformat is None:
-        outfileformat = StaticValues.UTIL_MODIFIERS_HASHCAT_FILE_FORMAT
-    builder.setOutputFileFormat("3")
+        builder.setOutputFileFormat("3")
 
 def set_pmkid_Hash(builder):
     builder.setHashType("16800")
