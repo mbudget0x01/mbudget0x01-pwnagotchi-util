@@ -1,4 +1,4 @@
-import os
+""" import os
 import shutil
 import Helpers
 import StaticValues
@@ -20,7 +20,7 @@ def convertPcapToHccapx(inputpath):
         resp = Helpers.executeShellCommand(StaticValues.UTIL_PATH_CAP2HCCAPX +" "+ infile + " " + outfile)
 #TODO:ERROR HANDLING
 
-"""         if resp == 0:
+        if resp == 0:
         
             #remove unusable files to error
             if os.path.exists(outfile):
@@ -29,7 +29,7 @@ def convertPcapToHccapx(inputpath):
                     shutil.move(infile, errorfile)
                     os.remove(outfile)
                 else:
-                    os.remove(infile) """
+                    os.remove(infile)
 
 
 def convertPcapToPMKID(inputpath):
@@ -49,3 +49,4 @@ def convertPcapToPMKID(inputpath):
         infile = os.path.join(inputpath, file)
         outfile = pmkid_file + "_" + file.replace(".pcap",".pmkid") 
         resp = Helpers.executeShellCommand(StaticValues.UTIL_PATH_HCXPCAPTOOL +" -z "+ outfile + " " + infile)
+ """
