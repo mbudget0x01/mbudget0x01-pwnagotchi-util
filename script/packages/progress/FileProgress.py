@@ -9,6 +9,9 @@ class FileProgress:
     def setPassword(self, password):
         self.password = password
 
+    def getName(self):
+        return self.name
+
     def dump(self):
         return {"FileProgress": {'success': self.success,
                                'name': self.name,

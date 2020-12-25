@@ -2,13 +2,15 @@ import packages.util.hashcat.HashcatUtil as hashcat
 import packages.util.shell.ShellInteractions as shell
 import packages.log.log as log
 import packages.progress.progress as progress
+import os
 
 def execute(command):
     log.log_debug(command)
     return shell.executeShellCommandWithCallback(command)
 
 def track_progress(exit_code, file):
-    progress.trackProgressByExitcode(file, exit_code)
+    name = os.path.basename(file)
+    progress.trackProgressByExitcode(name, exit_code)
     log.log_info("Hashcat ended with status: " + str(exit_code))
 
 #WPA Attacks
@@ -18,7 +20,7 @@ def attack_wpa_bruteforce(infile,mask, outfile = None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile.replace(".hccapx",".pcap"))
+    track_progress(exit_code, infile)
 
 def attack_wpa_wordlist(infile,wordlist,rulefile=None,outfile=None):
     builder = hashcat.dictionary_Attack(infile,wordlist,rulefile,outfile)
@@ -26,7 +28,7 @@ def attack_wpa_wordlist(infile,wordlist,rulefile=None,outfile=None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile.replace(".hccapx",".pcap"))
+    track_progress(exit_code, infile)
 
 #PMKID Attack
 def attack_pmkid_bruteforce(infile,mask, outfile = None):
@@ -35,7 +37,7 @@ def attack_pmkid_bruteforce(infile,mask, outfile = None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile.replace(".pmkid",".pcap"))
+    track_progress(exit_code, infile)
 
 def attack_pmkid_wordlist(infile,wordlist,rulefile=None,outfile=None):
     builder = hashcat.dictionary_Attack(infile,wordlist,rulefile,outfile)
@@ -43,4 +45,4 @@ def attack_pmkid_wordlist(infile,wordlist,rulefile=None,outfile=None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile.replace(".pmkid",".pcap"))
+    track_progress(exit_code, infile)

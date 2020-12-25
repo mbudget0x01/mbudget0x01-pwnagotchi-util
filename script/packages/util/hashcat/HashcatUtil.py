@@ -1,6 +1,6 @@
 import os
 from .HashcatCommandBuilder import HashcatCommandBuilder
-import StaticValues
+from .StaticValues import UTIL_MODIFIERS_HASHCAT_FILE_FORMAT, UTIL_MODIFIERS_HASHCAT_PMKID_HASH, UTIL_MODIFIERS_HASHCAT_WPA_HASH
 
 def dictionary_Attack(infile,wordlist,rulefile=None,outfile=None):
 
@@ -10,7 +10,7 @@ def dictionary_Attack(infile,wordlist,rulefile=None,outfile=None):
     
     if outfile is not None:
         builder.setOutputFile(outfile)
-        builder.setOutputFileFormat("3")
+        builder.setOutputFileFormat(UTIL_MODIFIERS_HASHCAT_FILE_FORMAT)
     
     if rulefile is not None:
         builder.setRuleFile(rulefile)
@@ -27,7 +27,7 @@ def bruteforce_Attack(infile,mask,outfile=None):
 
     if outfile is not None:
         builder.setOutputFile(outfile)
-        builder.setOutputFileFormat("3")
+        builder.setOutputFileFormat(UTIL_MODIFIERS_HASHCAT_FILE_FORMAT)
     
     return builder
 
@@ -35,14 +35,14 @@ def set_output_file(outfile,builder,outfileformat=None):
     builder.setOutputFile(outfile)
     
     if outfileformat is None:
-        builder.setOutputFileFormat("3")
+        builder.setOutputFileFormat(UTIL_MODIFIERS_HASHCAT_FILE_FORMAT)
 
 def set_pmkid_Hash(builder):
-    builder.setHashType("16800")
+    builder.setHashType(UTIL_MODIFIERS_HASHCAT_PMKID_HASH)
     return builder
 
 def set_wpa_Hash(builder):
-    builder.setHashType("2500")
+    builder.setHashType(UTIL_MODIFIERS_HASHCAT_WPA_HASH)
     return builder
 
 def build(builder):

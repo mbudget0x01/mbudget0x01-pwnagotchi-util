@@ -41,11 +41,11 @@ class ProgressTracker:
 
         for entry in data:
             progress = entry['FileProgress']
-            name = progress['name']
-            modificationDate = progress['modificationDate']
-            password = progress['password']
+            name = str(progress['name']).strip()
+            modificationDate = float(progress['modificationDate'])
+            password = str(progress['password']).strip()
 
-            if password == 'None':
+            if password == 'null':
                 self.AddFailedFile(name, modificationDate)
             else:
                 self.AddSuccesfullFile(name, modificationDate, password)
@@ -85,3 +85,9 @@ class ProgressTracker:
                     return fp
             
             return None
+
+    def getFileProgress(self, name):
+        for fp in self.PROCESSED_FILES:
+            if fp.getName() == name:
+                return fp
+        return None

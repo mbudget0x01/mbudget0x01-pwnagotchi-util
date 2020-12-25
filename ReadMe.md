@@ -21,6 +21,12 @@ Configuration has To be implemented.
 
 If you don't want to use ```docker-compose```, make sure you pass your variables and have set the mappings.
 
+### .env files
+
+The Script comes with two ```.env``` files. \\
+The ```default.env``` is used as base ```.env``` konfiguration file. Use it as reference but don't change it. In the ```user.env``` you can overwrite the values from the ```defualt.env``` file and configure your run. These variables are parsed during runtime. This means there is no container rebuild required for diffrent runs if you specify something there. The Key-Value pairs should be selfexplaintory ;-)
+
+
 ### Repetitive Usage
 
 1. Configure the user.env file according to your wishes
@@ -53,7 +59,7 @@ If you don't want to use ```docker-compose```, make sure you pass your variables
 - [ ] implement notification at end of run
 - [x] Add in multiple modes for the hascat execution e.g. rules etc
 - [x] Make runs configurable
-- [ ] Keep a list of all attempts and results, to prevent multiple workload
+- [x] Keep a list of all attempts and results, to prevent multiple workload
 - [ ] Write and extend a Wordlist out of SSIDs to use in further runs
 
 ## Licensing

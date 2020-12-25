@@ -4,7 +4,9 @@ import packages.session.docker.util as docker_util
 import HashcatWrapper as hashcat
 import os
 import packages.util.pcap.static_values as pcap_vals
+import packages.progress.progress as progress
 
+progress_ignore_already_processed_files=False
 
 attack_wpa_bruteforce = False
 attack_wpa_dictionary = False
@@ -20,10 +22,12 @@ def parse_attacks_enabled():
     global attack_wpa_dictionary
     global attack_pmkid_bruteforce
     global attack_pmkid_dictionary
+    global progress_ignore_already_processed_files
     attack_wpa_bruteforce = docker_util.get_boolean_variable("attack_wpa_bruteforce")
     attack_wpa_dictionary = docker_util.get_boolean_variable("attack_wpa_wordlist")
     attack_pmkid_bruteforce = docker_util.get_boolean_variable("attack_pmkid_bruteforce")
     attack_pmkid_dictionary = docker_util.get_boolean_variable("attack_pmkid_wordlist")
+    progress_ignore_already_processed_files = docker_util.get_boolean_variable("progress_ignore_already_processed_files")
 
 def log_out_attacks_enabled():
     log.log_info("Attack modes parsed...")
@@ -31,10 +35,16 @@ def log_out_attacks_enabled():
     log.log_info("attack_wpa_dictionary: " + str(attack_wpa_dictionary))
     log.log_info("attack_pmkid_bruteforce: " + str(attack_pmkid_bruteforce))
     log.log_info("attack_pmkid_dictionary: " + str(attack_pmkid_dictionary))
+    log.log_info("progress_ignore_already_processed_files: " + str(progress_ignore_already_processed_files))
 
 def launch_pmkid_bruteforce_attack(input_folder,output_folder=None):
     for file in os.listdir(input_folder):
         if file.endswith(pcap_vals.UTIL_EXTENSION_PKMID):
+            if progress_ignore_already_processed_files:
+                if not progress.attack_is_recommended(file, os.path.join(input_folder,file)):
+                    log.log_info("Skipping: " + str(file) + "...")
+                    continue
+
             log.log_info("Attempting to crack: " + str(file) + " ...")
             infile = os.path.join(input_folder, file)
             outfile = None
@@ -47,6 +57,10 @@ def launch_pmkid_bruteforce_attack(input_folder,output_folder=None):
 def launch_wpa_bruteforce_attack(input_folder,output_folder=None):
     for file in os.listdir(input_folder):
         if file.endswith(pcap_vals.UTIL_EXTENSION_HCCAPX):
+            if progress_ignore_already_processed_files:
+                if not progress.attack_is_recommended(file, os.path.join(input_folder,file)):
+                    log.log_info("Skipping: " + str(file) + "...")
+                    continue
             log.log_info("Attempting to crack: " + str(file) + " ...")
             infile = os.path.join(input_folder, file)
             outfile = None
@@ -59,6 +73,10 @@ def launch_wpa_bruteforce_attack(input_folder,output_folder=None):
 def launch_pmkid_dictionary_attack(input_folder,output_folder=None):
     for file in os.listdir(input_folder):
         if file.endswith(pcap_vals.UTIL_EXTENSION_PKMID):
+            if progress_ignore_already_processed_files:
+                if not progress.attack_is_recommended(file, os.path.join(input_folder,file)):
+                    log.log_info("Skipping: " + str(file) + "...")
+                    continue
             log.log_info("Attempting to crack: " + str(file) + " ...")
             infile = os.path.join(input_folder, file)
             outfile = None
@@ -75,6 +93,10 @@ def launch_pmkid_dictionary_attack(input_folder,output_folder=None):
 def launch_wpa_dictionary_attack(input_folder,output_folder=None):
     for file in os.listdir(input_folder):
         if file.endswith(pcap_vals.UTIL_EXTENSION_HCCAPX):
+            if progress_ignore_already_processed_files:
+                if not progress.attack_is_recommended(file, os.path.join(input_folder,file)):
+                    log.log_info("Skipping: " + str(file) + "...")
+                    continue
             log.log_info("Attempting to crack: " + str(file) + " ...")
             infile = os.path.join(input_folder, file)
             outfile = None
