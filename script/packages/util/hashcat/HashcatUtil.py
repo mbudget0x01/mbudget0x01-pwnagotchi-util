@@ -1,12 +1,6 @@
 import os
 from .HashcatCommandBuilder import HashcatCommandBuilder
 import StaticValues
-#from ..shell.ShellInteractions import executeShellCommandWithCallback
-
-
-
-
-#TODO:Split up in bruteforce and dictionary Attack then split in pmkid and wpa
 
 def dictionary_Attack(infile,wordlist,rulefile=None,outfile=None):
 

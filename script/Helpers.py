@@ -3,11 +3,11 @@ import os
 from datetime import datetime
 
 import ProgressTracker
-import StaticValues
 import session
 
+import StaticValues
 
-#Logging
+""" #Logging
 def log_info(message):   
     log(logging.INFO, message)
 
@@ -20,9 +20,9 @@ def log_error(message):
 def log(level, message):
     #TODO: make correct
     print( "["+ StaticValues.TAG +"] " + message)
-    logging.log(level, "["+ StaticValues.TAG +"] " + message)
+    logging.log(level, "["+ StaticValues.TAG +"] " + message) """
 
-#Helper Functions
+""" #Helper Functions
 def getRootPath():
     file = os.path.dirname(os.path.realpath(__file__))
     return os.path.dirname(file)
@@ -68,7 +68,7 @@ def getRulesPath():
 
 def getProgressFilePath():
     path = getDataPath()
-    return os.path.join(path, StaticValues.FILE_PROGRESS)
+    return os.path.join(path, StaticValues.FILE_PROGRESS) """
 
 #parsing helpers
 def fileIsHashCatUsable(file):
@@ -78,7 +78,7 @@ def fileIsHashCatUsable(file):
     else:
         return False
 
-#progress tracking Helpers
+""" #progress tracking Helpers
 def trackProgressByExitcode(name, exitCode, password = "Na"):
     lastEdit = int(datetime.now().timestamp())
     pt = ProgressTracker.ProgressTracker()
@@ -87,4 +87,4 @@ def trackProgressByExitcode(name, exitCode, password = "Na"):
     else:
         pt.AddFailedFile(name, lastEdit)
     pt.saveProgress()
-    log_info("Progress saved at" + str(datetime.now().timestamp()))
+    log_info("Progress saved at" + str(datetime.now().timestamp())) """

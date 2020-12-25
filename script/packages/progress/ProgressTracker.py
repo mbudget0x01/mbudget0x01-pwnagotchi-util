@@ -1,16 +1,31 @@
-import Helpers
 import json
 import os
 
-PROCESSED_FILES = []
+from .FileProgress import *
+from ..session.file_system import getProgressFilePath
 
 class ProgressTracker:
 
+    PROCESSED_FILES = []
+    __instance = None
 
-    def __init__(self):
+    @staticmethod 
+    def getInstance():
+        if ProgressTracker.__instance == None:
+            ProgressTracker(getProgressFilePath())
+        return ProgressTracker.__instance
+
+    def __init__(self,progress_file_path):
+
+        if ProgressTracker.__instance != None:
+         raise Exception("This class is a singleton!")
+        else:
+         ProgressTracker.__instance = self
         
-        if PROCESSED_FILES == []:
-            self.loadProgress(Helpers.getProgressFilePath())
+        
+        if self.PROCESSED_FILES == []:
+            self.progress_file_path = progress_file_path
+            self.loadProgress(progress_file_path)
 
     
     def loadProgress(self, path):
@@ -36,8 +51,8 @@ class ProgressTracker:
                 self.AddSuccesfullFile(name, modificationDate, password)
 
     def saveProgress(self):
-        with open(Helpers.getProgressFilePath(), "w") as write_file:
-            f = json.dumps([o.dump() for o in PROCESSED_FILES])
+        with open(self.progress_file_path, "w") as write_file:
+            f = json.dumps([o.dump() for o in self.PROCESSED_FILES])
             write_file.write(f)
 
 
@@ -54,15 +69,15 @@ class ProgressTracker:
 
         f = self.FileExists(file)
         if f is not None:
-            PROCESSED_FILES.remove(f)
-        PROCESSED_FILES.append(file)
+            self.PROCESSED_FILES.remove(f)
+        self.PROCESSED_FILES.append(file)
         self.saveProgress()
 
     def FileExists(self, file):
-        if PROCESSED_FILES == []:
+        if self.PROCESSED_FILES == []:
             return
 
-        for fp in PROCESSED_FILES:
+        for fp in self.PROCESSED_FILES:
             if fp.name  == file.name:
                 if fp.success == False and file.success == True:
                     return fp
@@ -70,20 +85,3 @@ class ProgressTracker:
                     return fp
             
             return None
-
-class FileProgress:
-
-    def __init__(self, name, success, modificationDate):
-        self.success = success
-        self.name = name
-        self.modificationDate = modificationDate
-        self.password = None
-    
-    def setPassword(self, password):
-        self.password = password
-
-    def dump(self):
-        return {"FileProgress": {'success': self.success,
-                               'name': self.name,
-                               'modificationDate': self.modificationDate,
-                               'password': self.password}}

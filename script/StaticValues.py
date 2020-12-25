@@ -30,7 +30,7 @@ UTIL_FILE_NAME_INTERMED="intermed"
 
 #Session Related Stuff
 #SESSION_UUID = str(uuid.uuid4())
-TAG = "Parse-Files"
+#TAG = "Parse-Files"
 
 #Standard Values
 STANDARD_RULE = "best64.rule"
