@@ -9,3 +9,4 @@ rules/*
 /data
 __pycache__
 /test
+test.env
