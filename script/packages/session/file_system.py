@@ -60,3 +60,7 @@ def getRulesPath():
 def getProgressFilePath():
     path = getDataPath()
     return os.path.join(path, FILE_PROGRESS)
+
+def getSSIDWordlistFilePath():
+    path = getDataPath()
+    return os.path.join(path, FILE_SSID_WORDLIST)

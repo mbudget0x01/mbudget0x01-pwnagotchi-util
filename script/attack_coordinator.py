@@ -5,36 +5,48 @@ import HashcatWrapper as hashcat
 import os
 import packages.util.pcap.static_values as pcap_vals
 import packages.progress.progress as progress
+import ssid_wordlist_attack
 
 progress_ignore_already_processed_files=False
 
 attack_wpa_bruteforce = False
 attack_wpa_dictionary = False
+attack_wpa_ssid_dictionary = False
 
 
 attack_pmkid_bruteforce = False
 attack_pmkid_dictionary = False
+attack_pmkid_ssid_dictionary = False
 
 prepared = False
 
 def parse_attacks_enabled():
     global attack_wpa_bruteforce
     global attack_wpa_dictionary
+    global attack_wpa_ssid_dictionary
     global attack_pmkid_bruteforce
     global attack_pmkid_dictionary
+    global attack_pmkid_ssid_dictionary
     global progress_ignore_already_processed_files
+
     attack_wpa_bruteforce = docker_util.get_boolean_variable("attack_wpa_bruteforce")
     attack_wpa_dictionary = docker_util.get_boolean_variable("attack_wpa_wordlist")
     attack_pmkid_bruteforce = docker_util.get_boolean_variable("attack_pmkid_bruteforce")
     attack_pmkid_dictionary = docker_util.get_boolean_variable("attack_pmkid_wordlist")
+
+    attack_wpa_ssid_dictionary = docker_util.get_boolean_variable("attack_wpa_ssid_wordlist")
+    attack_pmkid_ssid_dictionary = docker_util.get_boolean_variable("attack_pmkid_ssid_wordlist")
+
     progress_ignore_already_processed_files = docker_util.get_boolean_variable("progress_ignore_already_processed_files")
 
 def log_out_attacks_enabled():
     log.log_info("Attack modes parsed...")
     log.log_info("attack_wpa_bruteforce: " + str(attack_wpa_bruteforce))
     log.log_info("attack_wpa_dictionary: " + str(attack_wpa_dictionary))
+    log.log_info("attack_wpa_ssid_dictionary: " + str(attack_wpa_ssid_dictionary))
     log.log_info("attack_pmkid_bruteforce: " + str(attack_pmkid_bruteforce))
     log.log_info("attack_pmkid_dictionary: " + str(attack_pmkid_dictionary))
+    log.log_info("attack_pmkid_ssid_dictionary: " + str(attack_pmkid_ssid_dictionary))
     log.log_info("progress_ignore_already_processed_files: " + str(progress_ignore_already_processed_files))
 
 def launch_pmkid_bruteforce_attack(input_folder,output_folder=None):
@@ -131,6 +143,16 @@ def attack(input_folder,output_folder=None):
     
     if attack_wpa_bruteforce:
         launch_wpa_bruteforce_attack(input_folder,output_folder)
+    
+    if attack_wpa_ssid_dictionary or attack_wpa_ssid_dictionary:
+        log.log_info("Generating ssid wordlist...")
+        ssid_wordlist_attack.update_wordlist()
+
+    if attack_pmkid_ssid_dictionary:
+        ssid_wordlist_attack.launch_pmkid_attack(input_folder,output_folder,progress_ignore_already_processed_files)
+    
+    if attack_wpa_ssid_dictionary:
+        ssid_wordlist_attack.launch_wpa_attack(input_folder,output_folder,progress_ignore_already_processed_files)
     
     log.log_info("Attack run ended")
     log.log_info_line()

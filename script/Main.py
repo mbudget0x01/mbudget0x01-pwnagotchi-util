@@ -1,6 +1,7 @@
 import packages.log
 import packages.log.log as log
 import packages.session as session
+import ssid_wordlist_attack
 
 import FileConverter
 import attack_coordinator
@@ -9,7 +10,7 @@ def main():
     log.log_info_line()
     log.log_info("Main routine started")
     log.log_info_line()
-
+    
     #load attacks
     attack_coordinator.prepare()
 
@@ -19,12 +20,12 @@ def main():
     log.log_debug("Intermediate Path: " + intermed_path)
 
     #converting the files
-    if attack_coordinator.attack_pmkid_bruteforce or attack_coordinator.attack_pmkid_dictionary:
+    if attack_coordinator.attack_pmkid_bruteforce or attack_coordinator.attack_pmkid_dictionary or attack_coordinator.attack_pmkid_ssid_dictionary:
         log.log_info("Converting pcap files to pmkid...")
         FileConverter.convert_multiple_pcap_to_pmkid(input_path, intermed_path)
 
 
-    if attack_coordinator.attack_wpa_bruteforce or attack_coordinator.attack_wpa_dictionary:
+    if attack_coordinator.attack_wpa_bruteforce or attack_coordinator.attack_wpa_dictionary or attack_coordinator.attack_wpa_ssid_dictionary:
         log.log_info("Converting pcap files to hccapx...")
         FileConverter.convert_multiple_pcap_to_hccapx(input_path, intermed_path)
 

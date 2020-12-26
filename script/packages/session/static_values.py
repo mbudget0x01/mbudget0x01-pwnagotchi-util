@@ -11,3 +11,4 @@ FOLDER_WORDLISTS = "wordlists"
 FOLDER_RULES = "rules"
 
 FILE_PROGRESS = "progress.json"
+FILE_SSID_WORDLIST = "ssid-wordlist.json"

@@ -44,6 +44,7 @@ The ```default.env``` is used as base ```.env``` konfiguration file. Use it as r
   ├─wordlists
   └─data
      ├─progress.json
+     ├─ssid-wordlist.json
      ├─input
      └─[Session-UUID]
               ├─intermediates
@@ -51,7 +52,7 @@ The ```default.env``` is used as base ```.env``` konfiguration file. Use it as r
               └─error
  ```
 
-The ```progress.json``` is used to track progression.
+The ```progress.json``` is used to track progression, the ```ssid-wordlist.json``` is the master SSID wordlist. It contains some meta data. The acutal export can be found under ```wordlists/ssid-wordlist-export.txt```.
 
 ## Todo
 
@@ -59,9 +60,10 @@ The ```progress.json``` is used to track progression.
 - [x] Add in multiple modes for the hascat execution e.g. rules etc
 - [x] Make runs configurable
 - [x] Keep a list of all attempts and results, to prevent multiple workload
-- [ ] Write and extend a Wordlist out of SSIDs to use in further runs
+- [x] Write and extend a Wordlist out of SSIDs to use in further runs
 - [ ] Make Dockerfile configurable through variables
 - [ ] Implement cleanup
+- [ ] Build some sort of communication with pwnagotchi to automate the process
 
 ## Licensing
 
