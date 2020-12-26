@@ -20,6 +20,6 @@ def attack_is_recommended(name, file_path):
         return True
     if progress.success == True:
         return False
-    if progress.timestamp < time.time(os.path.getmtime(file_path)):
+    if progress.modificationDate < time.time(os.path.getmtime(file_path)):
         return False
     return True

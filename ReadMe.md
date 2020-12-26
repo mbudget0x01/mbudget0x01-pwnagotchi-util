@@ -62,7 +62,7 @@ The ```progress.json``` is used to track progression, the ```ssid-wordlist.json`
 - [x] Keep a list of all attempts and results, to prevent multiple workload
 - [x] Write and extend a Wordlist out of SSIDs to use in further runs
 - [ ] Make Dockerfile configurable through variables
-- [ ] Implement cleanup
+- [x] Implement cleanup
 - [ ] Build some sort of communication with pwnagotchi to automate the process
 
 ## Licensing

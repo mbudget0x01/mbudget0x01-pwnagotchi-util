@@ -1,6 +1,7 @@
 import packages.log
 import packages.log.log as log
 import packages.session as session
+import packages.session.clean_up as clean_up
 import ssid_wordlist_attack
 
 import FileConverter
@@ -38,9 +39,17 @@ def main():
     attack_coordinator.attack(intermed_path, output_path)
 
     #cleaning up
+    log.log_info_line()
 
+    if session.docker.util.get_boolean_variable("general_cleanup_intermediates"):
+        log.log_info("Cleaning up session intermediates...")
+        clean_up.clean_up_intermediates()
+    if session.docker.util.get_boolean_variable("general_cleanup_input"):
+        log.log_info("Cleaning up input...")
+        clean_up.clean_up_input()
 
     log.log_info("Main routine finished execution")
+    log.log_info_line()
 
 if __name__ == "__main__":
     main()
