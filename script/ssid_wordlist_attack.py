@@ -27,6 +27,7 @@ def launch_wpa_attack(input_folder,output_folder=None, ignore_already_processed_
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_HCCAPX,".txt")
+                outfile = os.path.join(output_folder,outfile)
             wordlist = _get_exported_wordlist()
             log.log_info("Using wordlist: " + str(wordlist))
             rulefile = None
@@ -47,6 +48,7 @@ def launch_pmkid_attack(input_folder,output_folder=None, ignore_already_processe
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_PKMID,".txt")
+                outfile = os.path.join(output_folder,outfile)
             wordlist = _get_exported_wordlist()
             log.log_info("Using wordlist: " + str(wordlist))
             rulefile = None

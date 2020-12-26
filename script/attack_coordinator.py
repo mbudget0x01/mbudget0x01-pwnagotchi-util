@@ -62,6 +62,7 @@ def launch_pmkid_bruteforce_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_PKMID,".txt")
+                outfile = os.path.join(output_folder,outfile)
             mask = docker_util.get_string_variable("attack_pmkid_bruteforce_mask")
             log.log_info("Using bruteforce: " + str(mask))
             hashcat.attack_pmkid_bruteforce(infile,mask,outfile)
@@ -78,6 +79,7 @@ def launch_wpa_bruteforce_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_HCCAPX,".txt")
+                outfile = os.path.join(output_folder,outfile)
             mask = docker_util.get_string_variable("attack_wpa_bruteforce_mask")
             log.log_info("Using bruteforce: " + str(mask))
             hashcat.attack_pmkid_bruteforce(infile,mask,outfile)
@@ -94,6 +96,7 @@ def launch_pmkid_dictionary_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_PKMID,".txt")
+                outfile = os.path.join(output_folder,outfile)
             wordlist = docker_util.get_string_variable("attack_pmkid_wordlist_file_path")
             log.log_info("Using wordlist: " + str(wordlist))
             rulefile = None
@@ -114,6 +117,7 @@ def launch_wpa_dictionary_attack(input_folder,output_folder=None):
             outfile = None
             if output_folder is not None:
                 outfile = infile.replace(pcap_vals.UTIL_EXTENSION_HCCAPX,".txt")
+                outfile = os.path.join(output_folder,outfile)
             wordlist = docker_util.get_string_variable("attack_wpa_wordlist_file_path")
             log.log_info("Using wordlist: " + str(wordlist))
             rulefile = None
