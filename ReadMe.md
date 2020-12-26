@@ -1,6 +1,6 @@
 # ReadMe
 
-This is a Docker Container with a script to crack pcap files with Hashcat. The aim of the project is to automate the processing of Hashes captured with a pwnagotchi. As usual time isn't of the essence this can run a long time on a server.
+This is a Docker Container with a script to crack pcap files with Hashcat. The aim of the project is to automate the processing of Hashes captured with a pwnagotchi. It's designed to run in the background and grimmley do it's work.
 It uses the Docker container [dizcza/docker-hashcat](https://github.com/dizcza/docker-hashcat "dizcza/docker-hashcat"). \
 This project is under heavy development.
 
@@ -20,7 +20,7 @@ If you don't want to use ```docker-compose```, make sure you pass your variables
 ### .env files
 
 The Script comes with two ```.env``` files. \
-The ```default.env``` is used as base ```.env``` konfiguration file. Use it as reference but don't change it. In the ```user.env``` you can overwrite the values from the ```defualt.env``` file and configure your run. These variables are parsed during runtime. This means there is no container rebuild required for diffrent runs if you specify something there. The Key-Value pairs should be selfexplaintory ;-)
+The ```default.env``` is used as base ```.env``` konfiguration file. Use it as reference but don't change it. In the ```user.env``` you can overwrite the values from the ```defualt.env``` file and configure your run. These variables are parsed during runtime. This means there is no container rebuild required for diffrent runs if you specify something there. The Key-Value pairs should be selfexplainatory ;-)
 
 ### Repetitive Usage
 
