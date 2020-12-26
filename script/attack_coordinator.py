@@ -118,6 +118,7 @@ def attack(input_folder,output_folder=None):
         prepare()
 
     log.log_info("Starting attack run")
+    log.log_info_line()
     
     if attack_pmkid_dictionary:
         launch_pmkid_dictionary_attack(input_folder,output_folder)
@@ -132,6 +133,7 @@ def attack(input_folder,output_folder=None):
         launch_wpa_bruteforce_attack(input_folder,output_folder)
     
     log.log_info("Attack run ended")
+    log.log_info_line()
 
 def prepare():
     global prepared

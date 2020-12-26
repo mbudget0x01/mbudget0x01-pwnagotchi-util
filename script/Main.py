@@ -6,9 +6,9 @@ import FileConverter
 import attack_coordinator
 
 def main():
-    log.log_info("----------------------------")
+    log.log_info_line()
     log.log_info("Main routine started")
-    log.log_info("----------------------------")
+    log.log_info_line()
 
     #load attacks
     attack_coordinator.prepare()

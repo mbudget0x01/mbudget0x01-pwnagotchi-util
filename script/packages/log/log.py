@@ -8,6 +8,9 @@ def log_debug(message):
 def log_info(message):   
     log(logging.INFO, message)
 
+def log_info_line():
+    log_info("----------------------------")
+
 def log_warning(message):   
     log(logging.WARNING, message)
 
@@ -20,5 +23,16 @@ def log(level, message):
     logging.log(level, "["+ LOG_TAG +"] " + message)
 
 
-def initalize_log(log_level):
-    logging.basicConfig(filename=LOG_FILE, level=log_level)
+def initalize_log(log_level=None, log_file=None):
+    if log_file is None:
+        log_file = LOG_FILE
+        
+    try:
+        log_level = int(log_level)
+    except Exception:
+        log_level = None
+    
+    if log_level is None:
+        logging.DEBUG
+
+    logging.basicConfig(filename=log_file, level=log_level)
