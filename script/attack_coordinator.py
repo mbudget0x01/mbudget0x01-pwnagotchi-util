@@ -158,8 +158,9 @@ def attack(input_folder,output_folder=None):
     if attack_wpa_ssid_dictionary:
         ssid_wordlist_attack.launch_wpa_attack(input_folder,output_folder,progress_ignore_already_processed_files)
     
-    log.log_info("Attack run ended")
     log.log_info_line()
+    log.log_info("Attack run ended")
+    
 
 def prepare():
     global prepared
