@@ -12,6 +12,9 @@ class FileProgress:
     def getName(self):
         return self.name
 
+    def getSuccess(self):
+        return self.success
+        
     def dump(self):
         return {"FileProgress": {'success': self.success,
                                'name': self.name,

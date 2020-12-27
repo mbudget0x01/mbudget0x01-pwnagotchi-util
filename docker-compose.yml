@@ -3,10 +3,15 @@ version: '3.1'
 services:
 
   mbudget0x01-pwnagotchi-util:
-    build: .
+    build:
+      context: .
+      args: 
+        - build_hashcat_image=intel-cpu
     restart: "no"
     volumes:
-      - /media/sdb1/mbudget0x01-pwnagotchi-util:/root/mbudget0x01/handshakeparser/data
+      - /media/sdb1/mbudget0x01-pwnagotchi-util/data:/root/mbudget0x01/handshakeparser/data
+      - /media/sdb1/mbudget0x01-pwnagotchi-util/wordlists:/root/mbudget0x01/handshakeparser/wordlists
+      - /media/sdb1/mbudget0x01-pwnagotchi-util/rules:/root/mbudget0x01/handshakeparser/rules
     logging:
       options:
         max-size: "10m"

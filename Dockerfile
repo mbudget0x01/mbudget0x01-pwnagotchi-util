@@ -1,7 +1,8 @@
 #Change here if you have a GPU or Something else
-FROM dizcza/docker-hashcat:intel-cpu
+ARG build_hashcat_image=intel-cpu
+FROM dizcza/docker-hashcat:${build_hashcat_image}
 
-LABEL Description="This image parses pcap files and attempts to crack them with Hashcat" Vendor="mbudget0x01" Version="0.9"
+LABEL Description="This image parses pcap files and attempts to crack them with Hashcat" Vendor="mbudget0x01" Version="1.0"
 
 #Script is written in python
 RUN apt-get update && apt-get install -y --no-install-recommends \

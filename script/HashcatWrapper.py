@@ -8,9 +8,9 @@ def execute(command):
     log.log_debug(command)
     return shell.executeShellCommandWithCallback(command)
 
-def track_progress(exit_code, file):
+def track_progress(exit_code, file, out_file = None):
     name = os.path.basename(file)
-    progress.trackProgressByExitcode(name, exit_code)
+    progress.trackProgressByExitcode(name, exit_code,outfile=out_file)
     log.log_info("Hashcat ended with status: " + str(exit_code))
 
 #WPA Attacks
@@ -20,7 +20,7 @@ def attack_wpa_bruteforce(infile,mask, outfile = None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile)
+    track_progress(exit_code, infile, outfile)
 
 def attack_wpa_wordlist(infile,wordlist,rulefile=None,outfile=None):
     builder = hashcat.dictionary_Attack(infile,wordlist,rulefile,outfile)
@@ -28,7 +28,7 @@ def attack_wpa_wordlist(infile,wordlist,rulefile=None,outfile=None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile)
+    track_progress(exit_code, infile, outfile)
 
 #PMKID Attack
 def attack_pmkid_bruteforce(infile,mask, outfile = None):
@@ -37,7 +37,7 @@ def attack_pmkid_bruteforce(infile,mask, outfile = None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile)
+    track_progress(exit_code, infile, outfile)
 
 def attack_pmkid_wordlist(infile,wordlist,rulefile=None,outfile=None):
     builder = hashcat.dictionary_Attack(infile,wordlist,rulefile,outfile)
@@ -45,4 +45,4 @@ def attack_pmkid_wordlist(infile,wordlist,rulefile=None,outfile=None):
     command = hashcat.build(builder)
     exit_code = execute(command)
     #TODO: static value
-    track_progress(exit_code, infile)
+    track_progress(exit_code, infile, outfile)

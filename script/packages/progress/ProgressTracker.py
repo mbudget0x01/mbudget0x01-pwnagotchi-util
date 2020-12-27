@@ -23,7 +23,7 @@ class ProgressTracker:
          ProgressTracker.__instance = self
         
         
-        if self.PROCESSED_FILES == []:
+        if ProgressTracker.PROCESSED_FILES == []:
             self.progress_file_path = progress_file_path
             self.loadProgress(progress_file_path)
 
@@ -52,7 +52,7 @@ class ProgressTracker:
 
     def saveProgress(self):
         with open(self.progress_file_path, "w") as write_file:
-            f = json.dumps([o.dump() for o in self.PROCESSED_FILES])
+            f = json.dumps([o.dump() for o in ProgressTracker.PROCESSED_FILES])
             write_file.write(f)
 
 
@@ -68,26 +68,31 @@ class ProgressTracker:
     def AddFile(self, file):
 
         f = self.FileExists(file)
+
         if f is not None:
-            self.PROCESSED_FILES.remove(f)
-        self.PROCESSED_FILES.append(file)
+            ProgressTracker.PROCESSED_FILES.remove(f)
+        ProgressTracker.PROCESSED_FILES.append(file)
         self.saveProgress()
 
     def FileExists(self, file):
-        if self.PROCESSED_FILES == []:
-            return
-
-        for fp in self.PROCESSED_FILES:
-            if fp.name  == file.name:
-                if fp.success == False and file.success == True:
-                    return fp
-                elif fp.modificationDate >= file.modificationDate:
-                    return fp
-            
+        if ProgressTracker.PROCESSED_FILES == []:
             return None
 
+        for fp in ProgressTracker.PROCESSED_FILES:
+            if fp.getName() == file.getName():
+                    return fp
+            
+        return None
+
     def getFileProgress(self, name):
-        for fp in self.PROCESSED_FILES:
+        for fp in ProgressTracker.PROCESSED_FILES:
             if fp.getName() == name:
                 return fp
         return None
+    
+    def getSucessfullFilesWithoutSuffix(self):
+        files = []
+        for fp in ProgressTracker.PROCESSED_FILES:
+            if fp.getSuccess():
+                files.append(fp.getName().split(".")[0])
+        return files

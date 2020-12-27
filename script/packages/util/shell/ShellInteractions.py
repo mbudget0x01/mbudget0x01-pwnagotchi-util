@@ -15,6 +15,6 @@ def executeShellCommandWithCallback(command):
         if process.poll() is not None:
             break
         if output:
-            print(output.strip())
+            print(output.strip().decode("utf-8"))
     rc = process.poll()
     return rc

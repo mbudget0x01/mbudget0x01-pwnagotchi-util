@@ -10,6 +10,7 @@ import attack_coordinator
 def main():
     log.log_info_line()
     log.log_info("Main routine started")
+    log.log_info("Session ID: " + str(session.SESSION_UUID))
     log.log_info_line()
     
     #load attacks
@@ -31,7 +32,7 @@ def main():
         FileConverter.convert_multiple_pcap_to_hccapx(input_path, intermed_path)
 
     #check if hascat should write output or if it is a dry run
-        output_path = None
+    output_path = None
     if session.docker.util.get_boolean_variable("hashcat_print_outfiles"):
         output_path = session.file_system.getSessionOutputPath()
     
@@ -45,8 +46,11 @@ def main():
         log.log_info("Cleaning up session intermediates...")
         clean_up.clean_up_intermediates()
     if session.docker.util.get_boolean_variable("general_cleanup_input"):
+        only_sucessfull = session.docker.util.get_boolean_variable("general_cleanup_input_only_successfull")
         log.log_info("Cleaning up input...")
-        clean_up.clean_up_input()
+        if only_sucessfull:
+            log.log_info("Only removing sucessfull files")
+        clean_up.clean_up_input(only_sucessfull)
 
     log.log_info("Main routine finished execution")
     log.log_info_line()
