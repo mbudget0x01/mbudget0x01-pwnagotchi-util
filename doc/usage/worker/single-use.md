@@ -26,7 +26,7 @@ But be aware it comes with some drawbacks:
 ## Helpful Commands
 
 Build the container: \
-```docker build --target builder --tag mbudget0x01-pwnagotchi-util --build-arg build_hashcat_image=intel-cpu .```
+```docker build --target worker_only --tag mbudget0x01-pwnagotchi-util --build-arg build_hashcat_image=intel-cpu .```
 
 Run the container: \
 ```docker run -it --env-file=user.env mbudget0x01-pwnagotchi-util```
