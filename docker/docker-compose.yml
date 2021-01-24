@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+
+  mbudget0x01-pwnagotchi-util:
+    ports:
+      - "5555:5555/udp"
+      - "5556:5556"
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args: 
+        - build_hashcat_image=intel-cpu
+    restart: "no"
+    volumes:
+      - /media/sdb1/mbudget0x01-pwnagotchi-util/data:/root/mbudget0x01/data
+      - /media/sdb1/mbudget0x01-pwnagotchi-util/wordlists:/root/mbudget0x01/wordlists
+      - /media/sdb1/mbudget0x01-pwnagotchi-util/rules:/root/mbudget0x01/rules
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    env_file: 
+      - user.env

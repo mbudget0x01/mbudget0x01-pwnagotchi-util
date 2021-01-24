@@ -17,23 +17,8 @@ If you want to use the container to it's full extend, I recommend using it this 
 ## Preparation to run
 
 * Make sure to specify all the values in the ```user.env``` according to your wishes.
-
-### First run
-
-The first run is a bit special as it needs to create all the needed paths. It is possible to run with workload from the start. To do some work in the first run put the ```.pcap``` files in the ```input``` folder.
-
-However be aware that this files will not be cleaned up after the run and stay there. I recommend to build the container and do a dry run.
-
-The same goes for the worlists and rules.
-
-### Subsequent runs
-
-The subsequent runs are pretty straight-forward.
-
-* Put the ```.pcap``` files you want to crack on your host system in the mapped ```{your host system path}/data/input``` folder
-* Optional:
-  * Adjust your ```user.env``` file according to your needs
-  * supplement the wordlists and rules like the ```.pcap``` files
+* Create the mapping folders for the wordlists and rule files.
+* Make sure to place the rulefiles according to your ```user.env``` config in the corresponding folders.
 
 ### Let's go
 

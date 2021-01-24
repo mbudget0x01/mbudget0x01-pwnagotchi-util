@@ -4,14 +4,38 @@ This is a Docker Container with a script to crack pcap files with Hashcat. The a
 It uses the Docker container [dizcza/docker-hashcat](https://github.com/dizcza/docker-hashcat "dizcza/docker-hashcat"). \
 This project is under heavy development.
 
+## Overwiew
+
+This project has three parts, namely:
+
+* pwnagotchi plugin
+* [workload coordinator](doc/coordinator/coordinator.md "coordinator")
+* worker script
+
+The Worker script takes a bunch of pcap files, converts them and attempts to crack them with hashcat. \
+The Coordinator Script loads the files from your pwnagotchi and instantiates the Worker script. \
+The pwnagotchi Plugin provides the files to your Coordinator Script. \
+
+## Worker Only
+
+It is possible to use the worker script on it's own. If you want to use this, build only the ```worker_only``` stage and run the docker container.
+Please refere to the according document:
+
+* [single use/docker only](doc/usage/worker/single-use.md "single use/docker only")
+
 ## Preparation and Usage
 
-I highly recommend to use ```docker-compose```. Please refer to the according documents:
+I am focussing here on the usage of all the tools combined.
+Please refere to this document.
 
-* [single use/docker only](doc/usage/single-use.md "single use/docker only")
 * [docker-compose](doc/usage/docker-compose.md "docker-compose")
+* [plugin](doc/usage/plugin.md "plugin")
 
 ## Additional Information
+
+### I have problems or found a bug
+
+Please refere to the [FAQ.](doc/faq.md "FAQ")
 
 ### FAQ
 
@@ -20,7 +44,7 @@ Is there a FAQ? [Yes.](doc/faq.md "FAQ")
 ### .env files
 
 The Script comes with two ```.env``` files. \
-The ```default.env``` is used as base ```.env``` konfiguration file. Use it as reference but don't change it. In the ```user.env``` you can overwrite the values from the ```defualt.env``` file and configure your run. These variables are parsed during runtime. This means there is no container rebuild required for diffrent runs if you specify something there. The Key-Value pairs should be selfexplainatory ;-)
+The ```default.env``` is used as base ```.env``` konfiguration file. Use it as reference but don't change it. In the ```user.env``` you can overwrite the values from the ```defualt.env``` file and configure your run. These variables are parsed during runtime. This means there is no container rebuild required for diffrent runs if you specify something there. If you are yousing the coordinator there is a restart required. The Key-Value pairs should be selfexplainatory ;-)
 
 ### FOLDER STRUCTURE
 
@@ -30,10 +54,11 @@ The ```default.env``` is used as base ```.env``` konfiguration file. Use it as r
   └─data
      ├─progress.json
      ├─ssid-wordlist.json
+     ├─backlog
      ├─input
+     ├─output
      └─[Session-UUID]
               ├─intermediates
-              ├─output
               └─error
  ```
 
@@ -41,15 +66,7 @@ The ```progress.json``` is used to track progression, the ```ssid-wordlist.json`
 
 ## Todo
 
-- [ ] Implement notification at end of run
-- [x] Add in multiple modes for the hascat execution e.g. rules etc
-- [x] Make runs configurable
-- [x] Keep a list of all attempts and results, to prevent multiple workload
-- [x] Write and extend a Wordlist out of SSIDs to use in further runs
-- [x] Make Dockerfile configurable through variables
-- [x] Implement cleanup
-- [ ] Build some sort of communication with pwnagotchi to automate the process
-- [ ] Make script to handle docker containers and subsequent workload
+Check out this page: [Roadmap.](doc/roadmap.md "Roadmap")
 
 ## Licensing
 
