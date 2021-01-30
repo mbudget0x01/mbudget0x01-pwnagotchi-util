@@ -9,6 +9,7 @@
 * Optimizations:
   * Clean up Code Base
   * Refactoring, structurizing the code
+* Make Coordinator check the files backlog in case a run ended unproper.
 
 ## Version >= 1.1.2
 
