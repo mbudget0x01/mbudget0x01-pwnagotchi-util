@@ -96,7 +96,7 @@ def connect_new_client_socket(server_ip:str, port:int) -> socket.socket:
     return s
 
 def _get_existing_files() -> [str]:
-    folder = file_system.getInputPath()
+    folder = file_system.getBacklogPath()
     return os.listdir(folder)
 
 def _generate_workloads(files:list):
