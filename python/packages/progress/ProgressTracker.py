@@ -45,7 +45,7 @@ class ProgressTracker:
             modificationDate = float(progress['modificationDate'])
             password = str(progress['password']).strip()
 
-            if password == 'null':
+            if password == 'null' or password == 'None' or password == "":
                 self.AddFailedFile(name, modificationDate)
             else:
                 self.AddSuccesfullFile(name, modificationDate, password)
