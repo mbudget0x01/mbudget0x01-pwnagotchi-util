@@ -22,9 +22,9 @@ If you want to use the container to it's full extend, I recommend using it this 
 
 ### Let's go
 
-1. Navigate to the ```docker-compose.yml```
-2. If you made changes to the  ```docker-compose.yml```, run ```docker-compose build```
-3. run ```docker-compose up -d```
+1. Navigate to the root project folder. This is important for the build context.
+2. If you made changes to the  ```docker-compose.yml```, run ```docker-compose -f .\docker\docker-compose.yml build```
+3. run ```docker-compose -f .\docker\docker-compose.yml  up -d```
 
 ## Helpful stuff
 

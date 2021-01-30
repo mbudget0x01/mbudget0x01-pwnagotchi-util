@@ -21,7 +21,7 @@ The pwnagotchi Plugin provides the files to your Coordinator Script. \
 It is possible to use the worker script on it's own. If you want to use this, build only the ```worker_only``` stage and run the docker container.
 Please refere to the according document:
 
-* [single use/docker only](doc/usage/worker/single-use.md "single use/docker only")
+* [single use/docker only](doc/usage/single-use.md "single use/docker only")
 
 ## Preparation and Usage
 
