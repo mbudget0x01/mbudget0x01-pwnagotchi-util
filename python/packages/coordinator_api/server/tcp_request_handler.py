@@ -63,4 +63,5 @@ class tcp_request_handler(BaseRequestHandler):
         else:
             logging.warning("Invalid request received")        
             socket = self.request #[0]
-            socket.send("Invalid request".encode("utf-8"))
+            handled_request = tcp_request.handle_request(msg, request_results.NACK)
+            socket.send(handled_request)
