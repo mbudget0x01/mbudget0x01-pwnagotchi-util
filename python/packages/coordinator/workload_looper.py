@@ -1,5 +1,6 @@
 import threading
 import packages.coordinator.looper_thread as looper_thread
+import packages.coordinator.workload as workload
 
 class workload_looper():
 
@@ -27,15 +28,22 @@ class workload_looper():
         return workload_looper.__instance
 
 
-    def add_workload(self,workload:list):
+    def add_workload(self,workload_files:list):
         #Here wi split up the workload, to prevent problems with the garbage collector -> produce zombies
-        while len(workload) > 10:
-            new_wl = []
+        while len(workload_files) > 10:
+            new_wl = workload.workload()
             for i in range(0, 11):
                 int(i)
-                new_wl.append(workload.pop())
+                new_wl.workload.append(workload_files.pop())
         
             workload_looper._queued_work.append(new_wl)
     
+        final_wl = workload.workload()
+        final_wl.set_workload(workload_files)
+        workload_looper._queued_work.append(final_wl)
 
-        workload_looper._queued_work.append(workload)
+    def add_special_workload(self,workload:workload.workload, do_now:bool=False):
+        if do_now:
+            workload_looper._queued_work.insert(0, workload)
+        else:
+            workload_looper._queued_work.append(workload)
