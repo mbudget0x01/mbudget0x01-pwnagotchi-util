@@ -12,7 +12,7 @@ import os
 
 handshakes_path = "/root/handshakes/"
 
-class tcp_request_handler(BaseRequestHandler):
+class tcp_file_request_handler(BaseRequestHandler):
 
     def handle(self):
         logging.debug("Handle tcp request")

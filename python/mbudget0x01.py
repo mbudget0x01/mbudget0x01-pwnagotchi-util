@@ -6,7 +6,7 @@ import os
 _add_custom_packages_path()
 
 import packages.tcp.tcp_server as tcp_server
-import packages.coordinator_api.server.tcp_request_handler as tcp_request_handler
+import packages.coordinator_api.server.tcp_file_request_handler as tcp_file_request_handler
 import packages.coordinator_api.client.coordinator_aviable_request as coordinator_aviable_request
 
 import pwnagotchi.plugins as plugins
@@ -39,7 +39,7 @@ class Coordinator(plugins.Plugin):
         
         try:
             logging.debug("Starting attempt to transfer files")
-            tcp_server.prepare('',5556,tcp_request_handler.tcp_request_handler)
+            tcp_server.prepare('',5556,tcp_file_request_handler.tcp_file_request_handler)
             logging.debug("Sending broadcast")
             coordinator_aviable_request.broadcast_request(my_ip)
         except Exception as ex:
