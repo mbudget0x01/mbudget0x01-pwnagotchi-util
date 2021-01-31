@@ -9,6 +9,10 @@ def log_debug(message):
 def log_info(message):   
     log(logging.INFO, message)
 
+def log_info_tag(tag:str, message:str):
+    msg = "["+ tag +"] " + message   
+    log(logging.INFO, msg)
+
 def log_info_line():
     log_info("----------------------------")
 
